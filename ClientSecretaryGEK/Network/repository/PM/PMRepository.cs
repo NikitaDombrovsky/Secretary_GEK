@@ -10,7 +10,6 @@ namespace ClientSecretaryGEK.Network.repository
     {
         List<PMTable> Execute();
         //void _Create(string token, string method, string index, string name);
-        PMTableCreate _Create();
 
     }
 }

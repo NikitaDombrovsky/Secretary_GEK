@@ -11,11 +11,6 @@ namespace ClientSecretaryGEK.Network.repository
     internal class PMRepositiryIMPL : PMRepository
     {
         Service<PMTable> service;
-        Service<PMTableCreate> serviceCreate;
-        public PMTableCreate _Create()
-        {
-            return serviceCreate.Create();
-        }
         public List<PMTable> Execute()
         {
             return service.Start();

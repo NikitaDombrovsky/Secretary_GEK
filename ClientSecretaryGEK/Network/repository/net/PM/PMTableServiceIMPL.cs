@@ -18,18 +18,6 @@ namespace ClientSecretaryGEK.Network.repository.net
             return (List<PMTable>)objResponse;
 //            throw new NotImplementedException();
         }
-        public PMTableCreate Create()
-        {
-            string method = "POST";
-            string index = 
-            var data = $@"{{
-                ""index_professional_module"": ""{index}"",
-                ""name_professional_module"": ""{name}""
-            }}";
-            var request = new PostRequest(Urls.PM, data, token, method);
-            request.Run();
 
-
-        }
     }
 }

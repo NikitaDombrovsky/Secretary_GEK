@@ -10,7 +10,7 @@ namespace ClientSecretaryGEK.Network.repository.net
     {
         List<T> Start();
         //List<T> Create();
-        T Create();
+        //T Create();
         //void Create(string token, string method, string index, string name);
     }
 }
