@@ -1,29 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using System.Net;
-using System.IO;
 
 namespace ClientSecretaryGEK.Network
 {
-    public class GetRequest
+    public class DeleteRequest
     {
         HttpWebRequest _request;
         string _adress;
 
         public string Response { get; set; }
 
-        public GetRequest(string address)
+        public DeleteRequest(string address)
         {
             _adress = address;
         }
-
         public void Run()
         {
             _request = (HttpWebRequest)WebRequest.Create(_adress);
-            _request.Method = "GET";
+            _request.Method = "DELETE";
 
 
             try
@@ -32,7 +31,8 @@ namespace ClientSecretaryGEK.Network
                 var stream = response.GetResponseStream();
                 if (stream != null) Response = new StreamReader(stream).ReadToEnd();
 
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
 
             }

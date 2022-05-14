@@ -1,0 +1,29 @@
+﻿<Page x:Class="ClientSecretaryGEK.Menu.MenuPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ClientSecretaryGEK.Menu"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MenuPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Panel.ZIndex="-2" Background="Gray" Grid.Row="0" Margin="-1,10,1,0">
+            <Button Content="Сформировать протоколы" x:Name="Btn1"  HorizontalAlignment="Left" Width="158"  Height="53" VerticalAlignment="Bottom" Margin="12,0,0,-66" Click="Btn1_Click" />
+            <Button Content="Дипломные работы" x:Name="Btn2"  HorizontalAlignment="Left" Width="158" Height="52" VerticalAlignment="Bottom" RenderTransformOrigin="0.52,0.516" Margin="12,0,0,-123" Click="Btn2_Click" />
+            <Button Content="Группы" x:Name="Btn3"  HorizontalAlignment="Left" Width="158"  Height="52" VerticalAlignment="Bottom" Margin="12,0,0,-179" Click="Btn3_Click" />
+            <Button Content="Студенты" x:Name="Btn4"  HorizontalAlignment="Left" Width="158"  Height="52" VerticalAlignment="Bottom" Margin="12,0,0,-235" Click="Btn4_Click" />
+            <Button Content="Специальности" x:Name="Btn5"  HorizontalAlignment="Left" Width="158" Height="52" VerticalAlignment="Bottom" RenderTransformOrigin="0.52,0.516" Margin="175,0,0,-123" Click="Btn5_Click" />
+            <Button Content="Профессиональные модули" x:Name="Btn6"  HorizontalAlignment="Left" Width="158"  Height="52" VerticalAlignment="Bottom" Margin="175,0,0,-179" Click="Btn6_Click" />
+            <Button Content="Темы" x:Name="Btn7"  HorizontalAlignment="Left" Width="158"  Height="52" VerticalAlignment="Bottom" Margin="175,0,0,-235" Click="Btn7_Click" />
+            <Button Content="Преподаватели" x:Name="Btn8"  HorizontalAlignment="Left" Width="158"  Height="52" VerticalAlignment="Bottom" Margin="338,0,0,-235" Click="Btn8_Click" />
+            <Button Content="Рецензенты" x:Name="Btn9"  HorizontalAlignment="Left" Width="158" Height="52" VerticalAlignment="Bottom" RenderTransformOrigin="0.52,0.516" Margin="501,0,0,-179" Click="Btn9_Click" />
+            <Button Content="Члены ГЭК" x:Name="Btn10"  HorizontalAlignment="Left" Width="158"  Height="52" VerticalAlignment="Bottom" Margin="501,0,0,-235" Click="Btn10_Click" />
+        </Grid>
+    </Grid>
+</Page>
