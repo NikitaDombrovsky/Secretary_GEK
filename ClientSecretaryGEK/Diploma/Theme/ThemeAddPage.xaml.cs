@@ -1,4 +1,6 @@
 ﻿using ClientSecretaryGEK.Network;
+using ClientSecretaryGEK.Network.repository.Theme;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,72 +23,100 @@ namespace ClientSecretaryGEK.Diploma.Theme
     /// </summary>
     public partial class ThemeAddPage : Page
     {
-        string urlTheme, urlPM, urlTeacher;
         int change_method;
         int id;
-        string method;
-        public ThemeAddPage(ThemeTable _selecteditem)
+        //string method;
+        List<TeacherTableALL> ListTC = new List<TeacherTableALL>();
+        List<PMTable> ListPM = new List<PMTable>();
+        string Token = "";
+        int role;
+        Errors errors = new Errors();
+        public ThemeAddPage(ThemeTableALL _selecteditem, string Token_, int role_)
         {
             InitializeComponent();
-            var url = new Urls();
-            url.RunUrl();
-            urlTheme = Urls.Theme;
-            urlPM = Urls.PM;
-            urlTeacher = Urls.Teacher;
-
+            Token = Token_;
+            role = role_;
             change_method = 0;
             if (_selecteditem != null)
             {
                 change_method = 1;
                 Name_PM.Text = _selecteditem.Название_Темы;
-               // ComboPM.
-                //id = _selecteditem.Id;
+                id = _selecteditem.Id;
+            }
+
+            ChangeTC();
+            ChangePM();
+            ComboPM.ItemsSource = ListPM;
+            ComboTeacher.ItemsSource = ListTC;
+        }
+        public void ChangePM()
+        {
+            var request = new GetRequest(Urls.PM, Token);
+            request.RunALL();
+            var response = request.Response;
+            var objResponse = JsonConvert.DeserializeObject<List<PMTable>>(response);
+            ListPM = objResponse;
+        }
+        public string Comm(string url)
+        {
+            var request = new GetRequest(url, Token);
+            request.Run();
+            string response = request.Response;
+            return response;
+        }
+        public void ChangeTC()
+        {
+            var request = new GetRequest(Urls.Teacher, Token);
+            request.RunALL();
+            var response = request.Response;
+            var objResponse = JsonConvert.DeserializeObject<List<TeacherTable>>(response);
+            for (int i = 0; i < objResponse.Count; i++)
+            {
+                var res = objResponse[i];
+                var res1 = JsonConvert.DeserializeObject<PDTable>(Comm(res.Id_PD));
+                ListTC.Add(new TeacherTableALL(res.Id, res1.Фамилия, res1.Имя, res1.Отчество, res.Должность, res.Дата_Рождения));
             }
         }
+
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                StringBuilder errors = new StringBuilder();
+                if (string.IsNullOrWhiteSpace(Name_PM.Text))
+                    errors.AppendLine("Укажите Название");
+                if (string.IsNullOrWhiteSpace(ComboPM.Text))
+                    errors.AppendLine("Укажите Должность");
+                if (string.IsNullOrWhiteSpace(ComboTeacher.Text))
+                    errors.AppendLine("Укажите Персональные данные");
+                if (errors.Length > 0)
+                {
+                    MessageBox.Show(errors.ToString());
+                    return;
+                }
+                ThemeCreate create = new ThemeCreate();
+                var str2 = (PMTable)ComboPM.SelectedItem;
 
-            StringBuilder errors = new StringBuilder();
-            if (string.IsNullOrWhiteSpace(Name_PM.Text))
-                errors.AppendLine("Укажите Название");
-            if (errors.Length > 0)
-            {
-                MessageBox.Show(errors.ToString());
-                return;
+                var str3 = (TeacherTableALL)ComboTeacher.SelectedItem;
+                string name = Name_PM.Text;
+                string id_pm = Urls.PM + str2.Id + "/";
+                string id_th = Urls.Teacher + str3.Id + "/";
+                if (change_method == 0)
+                {
+                    create.Create(Token, Urls.MethodPost, name, id_pm, id_th, Urls.Theme);
+                    MessageBox.Show("Добавление успешно!");
+                }
+                else
+                {
+                    create.Create(Token, Urls.MethodPut, name, id_pm, id_th, Urls.Theme + id + "/");
+                    MessageBox.Show("Изменение успешно!");
+                }
+                App.ParentWindowRef.ParentFrame.Navigate(new ThemePage(Token, role));
             }
-            string name = Name_PM.Text;
-            string idpm = "1";
-            string idtch = "1";
-            string url = "Basic QWRtaW46MTIzNDU2QWRtaW4=";
-
-            if (change_method == 0)
+            catch (Exception ex)
             {
-                method = "POST";
-                var data = $@"{{
-                ""name_theme"": ""{name}"",
-                ""id_professional_module"": ""{idpm}"",
-                ""id_teacher"": ""{idtch}""
-            }}";
-                var request = new PostRequest(urlPM, data, url, method);
-                request.Run();
-                MessageBox.Show("Добавление успешно!");
+                MessageBox.Show(errors.Error(ex));
             }
-            else
-            {
-                // urlPM = urlPM + id + "/";
-                string _urlPM = urlPM + id + "/";
-                method = "PUT";
-                var data = $@"{{
-                ""id"": ""{id}"",
-                ""name_theme"": ""{name}"",
-                ""id_professional_module"": ""{idpm}"",
-                ""id_teacher"": ""{idtch}""
-            }}";
-                var request = new PostRequest(_urlPM, data, url, method);
-                request.Run();
-                MessageBox.Show("Изменение успешно!");
-            }
-            App.ParentWindowRef.ParentFrame.Navigate(new ThemePage());
         }
     }
 }

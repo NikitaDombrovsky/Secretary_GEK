@@ -1,6 +1,6 @@
 ﻿using ClientSecretaryGEK.Network;
 using ClientSecretaryGEK.Network.repository;
-using ClientSecretaryGEK.Network.repository.net;
+//using ClientSecretaryGEK.Network.repository.net;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -24,28 +24,63 @@ namespace ClientSecretaryGEK.Diploma.PM
     /// </summary>
     public partial class PMPage : Page
     {
-        string urlPM;
+        //string urlPM;
         List<PMTable> ListMain = new List<PMTable>();
-        public PMPage()
+        String Token = "";
+        int role;
+        Errors errors = new Errors();
+        public PMPage(string Token_, int role_)
         {
             InitializeComponent();
-            Service<PMTable> service = new PMTableServiceIMPL();
-            PMRepository pM = new PMRepositiryIMPL(service);
-            ListMain = pM.Execute();
-            dgv.ItemsSource = ListMain;
+            Token = Token_;
+            role = role_;
+            if (role == 0)
+            {
+                BtnAdd.IsEnabled = false;
+                BtnEdit.IsEnabled = false;
+                BtnDel.IsEnabled = false;
+            }
+            Change();
+            /*
+            try
+            {
+                //PMRepository pM = new PMRepositiryIMPL();
+                //ListMain = pM.Execute();
+                //dgv.ItemsSource = ListMain;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(errors.Error(ex));
+            }
+            */
         }
+        public void Change()
+        {
+            try
+            {
+                var request = new GetRequest(Urls.PM, Token);
+                request.RunALL();
+                var response = request.Response;
+                var objResponse = JsonConvert.DeserializeObject<List<PMTable>>(response);
+                ListMain = objResponse;
+                dgv.ItemsSource = ListMain;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(errors.Error(ex));
+            }
 
+        }
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            App.ParentWindowRef.ParentFrame.Navigate(new PMAddPage(null));
+            App.ParentWindowRef.ParentFrame.Navigate(new PMAddPage(null, Token, role));
         }
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
             PMTable path = dgv.SelectedItem as PMTable;
             if (dgv.SelectedItem != null)
             {
-               // MessageBox.Show(" ID: " + path.Id + " индекс: " + path.index_professional_module + "\n имя: " + path.name_professional_module);
-                App.ParentWindowRef.ParentFrame.Navigate(new PMAddPage(path));
+                App.ParentWindowRef.ParentFrame.Navigate(new PMAddPage(path, Token, role));
             }
             else
             {
@@ -76,9 +111,10 @@ namespace ClientSecretaryGEK.Diploma.PM
                 {
                     try
                     {
-                        var request = new DeleteRequest(Urls.PM + path.Id + "/");
+                        var request = new DeleteRequest(Urls.PM + path.Id + "/", Token);
                         request.Run();
                         MessageBox.Show("Данные удалены!");
+                        Change();
 
                     }
                     catch (Exception ex)
@@ -91,7 +127,6 @@ namespace ClientSecretaryGEK.Diploma.PM
             {
                 MessageBox.Show("Выберите элемент!");
             }
-           // Change();
         }
         
 
@@ -103,15 +138,5 @@ namespace ClientSecretaryGEK.Diploma.PM
                 сотрудникDataGrid.ItemsSource = SecretaryEntities5.GetContext().Employees.ToList();
             }*/
         }
-        private void dgv_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            PMTable path = dgv.SelectedItem as PMTable;
-            //MyTable path = grid.SelectedItem as MyTable;
-            MessageBox.Show(" ID: " + path.Id + " индекс: " + path.Индекс_ПМ + "\n имя: " + path.Название_ПМ);
-
-            // MessageBox.Show(" ID: " + path.Id + "\n Исполнитель: " + path.Vocalist + "\n Альбом: " + path.Album + "\n Год: " + path.Year);
-        }
-
-
     }
 }

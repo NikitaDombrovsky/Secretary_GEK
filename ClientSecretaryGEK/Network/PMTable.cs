@@ -8,7 +8,7 @@ namespace ClientSecretaryGEK.Network
 {
     public class PMTable
     {
-        public PMTable(int Id, string index_professional_module, string name_professional_module) 
+        public PMTable(int Id, string index_professional_module, string name_professional_module)
         {
             this.Id = Id;
             this.Индекс_ПМ = index_professional_module;
@@ -28,6 +28,7 @@ namespace ClientSecretaryGEK.Network
         public string index_professional_module { get; set; }
         public string name_professional_module { get; set; }
     }
+    // Удаляй
     public class PMTableCreate
     {
         public PMTableCreate(string token, string method, string index, string name)
@@ -38,9 +39,10 @@ namespace ClientSecretaryGEK.Network
             this.name = name;
         }
 
-        public string token { get; set;}
-        public string method { get; set;}
-        public string index { get; set;}
-        public string name { get; set;}
+        public string token { get; set; }
+        public string method { get; set; }
+        public string index { get; set; }
+        public string name { get; set; }
 
+    }
 }

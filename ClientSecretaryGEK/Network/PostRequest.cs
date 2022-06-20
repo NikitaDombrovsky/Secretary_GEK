@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ClientSecretaryGEK.Network
 {
@@ -12,36 +13,28 @@ namespace ClientSecretaryGEK.Network
     {
         HttpWebRequest _request;
         string _adress;
-       // string _index;
-       // string _name;
-        string _url;
+        string Token;
         string _data;
         string _method;
-
+        Errors errors = new Errors();
         public string Response { get; set; }
 
-        public PostRequest(string address, string data, string url, string method )
+        public PostRequest(string address, string data, string Token_, string method )
         {
             _adress = address;
             _data = data;
-            _url = url;
+            Token = Token_;
             _method = method;
         }
 
+        
         public void Run()
         {
             _request = (HttpWebRequest)WebRequest.Create(_adress);
             _request.Method = _method;
-            _request.Headers["Authorization"] = "Basic QWRtaW46MTIzNDU2QWRtaW4=";
-            
+            //_request.Headers["Authorization"] = "Basic QWRtaW46MTIzNDU2QWRtaW4=";            
+            _request.Headers["Authorization"] = Token;        
             _request.ContentType = "application/json";
-            /*
-            var data = $@"{{
-                ""index_professional_module"": ""{index}"",
-                ""name_professional_module"": ""{name}""
-            }}";
-            */
-
 
             try
             {
@@ -53,15 +46,13 @@ namespace ClientSecretaryGEK.Network
                 using (var streamReader = new StreamReader(_response.GetResponseStream()))
                 {
                     var result = streamReader.ReadToEnd();
+                    Response = result;
                 }
-                //HttpWebResponse response = (HttpWebResponse)_request.GetResponse();
-                //var stream = response.GetResponseStream();
-                //if (stream != null) Response = new StreamReader(stream).ReadToEnd();
-
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show(errors.Error(ex));
+                //return;
             }
 
         }

@@ -1,6 +1,7 @@
 ﻿using ClientSecretaryGEK.Network;
 using ClientSecretaryGEK.Network.repository;
-using ClientSecretaryGEK.Network.repository.net;
+using ClientSecretaryGEK.Network.repository.PM;
+//using ClientSecretaryGEK.Network.repository.net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,15 +24,19 @@ namespace ClientSecretaryGEK.Diploma.PM
     /// </summary>
     public partial class PMAddPage : Page
     {
-        string urlPM;
+        //string urlPM;
         int change_method;
         int id;
         string method;
-        public PMAddPage(PMTable _selecteditem)
+        string Token = "";
+        int role;
+        Errors errors = new Errors();
+        public PMAddPage(PMTable _selecteditem, string Token_, int role_)
         {
             InitializeComponent();
-            urlPM = Urls.PM;
-
+            //urlPM = Urls.PM;
+            Token = Token_;
+            role = role_;
             change_method = 0;
             if (_selecteditem != null)
             {
@@ -43,50 +48,54 @@ namespace ClientSecretaryGEK.Diploma.PM
         }
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            
-            StringBuilder errors = new StringBuilder();
-            if (string.IsNullOrWhiteSpace(Index_PM.Text))
-                errors.AppendLine("Укажите Индекс");
-            if (string.IsNullOrWhiteSpace(Name_PM.Text))
-                errors.AppendLine("Укажите Название");
-            if (errors.Length > 0)
+            try
             {
-                MessageBox.Show(errors.ToString());
-                return;
-            }
-            string index = Index_PM.Text;
-            string name = Name_PM.Text;
-            string token = "Basic QWRtaW46MTIzNDU2QWRtaW4=";
+                StringBuilder errors = new StringBuilder();
+                if (string.IsNullOrWhiteSpace(Index_PM.Text))
+                    errors.AppendLine("Укажите Индекс");
+                if (string.IsNullOrWhiteSpace(Name_PM.Text))
+                    errors.AppendLine("Укажите Название");
+                if (errors.Length > 0)
+                {
+                    MessageBox.Show(errors.ToString());
+                    return;
+                }
+                string index = Index_PM.Text;
+                string name = Name_PM.Text;
+                PMCreate create = new PMCreate();
+                //string token = "Basic QWRtaW46MTIzNDU2QWRtaW4=";
 
-            if (change_method == 0)
-            {
-                Service<PMTable> service = new PMTableServiceIMPL();
-                PMRepository pM = new PMRepositiryIMPL(service);
-                pM._Create(token, method, index, name);
-                method = "POST";
-                var data = $@"{{
-                ""index_professional_module"": ""{index}"",
-                ""name_professional_module"": ""{name}""
-            }}";
-               var request = new PostRequest(urlPM, data, token, method);
-               request.Run();
-               MessageBox.Show("Добавление успешно!");
+                if (change_method == 0)
+                {
+                    method = "POST";
+                    create.Create(Token, method, index, name, Urls.PM);
+                    // Create(token, method, index, name, Urls.PM);
+                    MessageBox.Show("Добавление успешно!");
+                }
+                else
+                {
+                    string _urlPM = Urls.PM + id + "/";
+                    method = "PUT";
+                    create.Create(Token, method, index, name, _urlPM);
+                    //Create(token, method, index, name, Urls.PM);
+                    MessageBox.Show("Изменение успешно!");
+                }
+                App.ParentWindowRef.ParentFrame.Navigate(new PMPage(Token, role));
             }
-            else
+            catch (Exception ex)
             {
-               // urlPM = urlPM + id + "/";
-                string _urlPM = urlPM + id + "/";
-                method = "PUT";
-                var data = $@"{{
-                ""id"": ""{id}"",
-                ""index_professional_module"": ""{index}"",
-                ""name_professional_module"": ""{name}""
-            }}";
-                var request = new PostRequest(_urlPM, data, token, method);
-                request.Run();
-                MessageBox.Show("Изменение успешно!");
+                MessageBox.Show(errors.Error(ex));
             }
-            App.ParentWindowRef.ParentFrame.Navigate(new PMPage());
         }
+/*        public void Create(string token, string method, string index, string name, string urlPM)
+        {
+            var data = $@"{{
+                ""id"": ""{id}""
+                ""index_professional_module"": ""{index}"",
+                ""name_professional_module"": ""{name}""
+            }}";
+            var request = new PostRequest(urlPM, data, token, method);
+            request.Run();
+        }*/
     }
 }

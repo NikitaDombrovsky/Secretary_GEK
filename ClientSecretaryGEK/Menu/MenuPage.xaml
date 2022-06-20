@@ -13,17 +13,16 @@
             <RowDefinition Height="70"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Panel.ZIndex="-2" Background="Gray" Grid.Row="0" Margin="-1,10,1,0">
-            <Button Content="Сформировать протоколы" x:Name="Btn1"  HorizontalAlignment="Left" Width="158"  Height="53" VerticalAlignment="Bottom" Margin="12,0,0,-66" Click="Btn1_Click" />
-            <Button Content="Дипломные работы" x:Name="Btn2"  HorizontalAlignment="Left" Width="158" Height="52" VerticalAlignment="Bottom" RenderTransformOrigin="0.52,0.516" Margin="12,0,0,-123" Click="Btn2_Click" />
-            <Button Content="Группы" x:Name="Btn3"  HorizontalAlignment="Left" Width="158"  Height="52" VerticalAlignment="Bottom" Margin="12,0,0,-179" Click="Btn3_Click" />
-            <Button Content="Студенты" x:Name="Btn4"  HorizontalAlignment="Left" Width="158"  Height="52" VerticalAlignment="Bottom" Margin="12,0,0,-235" Click="Btn4_Click" />
-            <Button Content="Специальности" x:Name="Btn5"  HorizontalAlignment="Left" Width="158" Height="52" VerticalAlignment="Bottom" RenderTransformOrigin="0.52,0.516" Margin="175,0,0,-123" Click="Btn5_Click" />
-            <Button Content="Профессиональные модули" x:Name="Btn6"  HorizontalAlignment="Left" Width="158"  Height="52" VerticalAlignment="Bottom" Margin="175,0,0,-179" Click="Btn6_Click" />
-            <Button Content="Темы" x:Name="Btn7"  HorizontalAlignment="Left" Width="158"  Height="52" VerticalAlignment="Bottom" Margin="175,0,0,-235" Click="Btn7_Click" />
-            <Button Content="Преподаватели" x:Name="Btn8"  HorizontalAlignment="Left" Width="158"  Height="52" VerticalAlignment="Bottom" Margin="338,0,0,-235" Click="Btn8_Click" />
-            <Button Content="Рецензенты" x:Name="Btn9"  HorizontalAlignment="Left" Width="158" Height="52" VerticalAlignment="Bottom" RenderTransformOrigin="0.52,0.516" Margin="501,0,0,-179" Click="Btn9_Click" />
-            <Button Content="Члены ГЭК" x:Name="Btn10"  HorizontalAlignment="Left" Width="158"  Height="52" VerticalAlignment="Bottom" Margin="501,0,0,-235" Click="Btn10_Click" />
-        </Grid>
+        <Grid Panel.ZIndex="-2" Background="#add3e6" Grid.Row="0" Margin="-1,0,0,0"/>
+        <Button Content="Группы" x:Name="Btn3"  HorizontalAlignment="Left" Width="158"  Height="52" VerticalAlignment="Bottom" Margin="10,0,0,133" Click="Btn3_Click" Grid.Row="1" />
+        <Button Content="Студенты" x:Name="Btn4"  HorizontalAlignment="Left" Width="158"  Height="52" VerticalAlignment="Bottom" Margin="10,0,0,77" Click="Btn4_Click" Grid.Row="1" />
+        <Button Content="Специальности" x:Name="Btn5"  HorizontalAlignment="Left" Width="158" Height="52" VerticalAlignment="Bottom" RenderTransformOrigin="0.52,0.516" Margin="173,0,0,78" Click="Btn5_Click" Grid.Row="1" />
+        <Button Content="Профессиональные модули" x:Name="Btn6"  HorizontalAlignment="Left" Width="158"  Height="52" VerticalAlignment="Bottom" Margin="173,0,0,21" Click="Btn6_Click" Grid.Row="1" />
+        <Button Content="Темы" x:Name="Btn7"  HorizontalAlignment="Left" Width="158"  Height="52" VerticalAlignment="Bottom" Margin="10,0,0,21" Click="Btn7_Click" Grid.Row="1" />
+        <Button Content="Преподаватели" x:Name="Btn8"  HorizontalAlignment="Left" Width="158"  Height="52" VerticalAlignment="Bottom" Margin="336,0,0,21" Click="Btn8_Click" Grid.Row="1" />
+        <Button Content="Рецензенты" x:Name="Btn9"  HorizontalAlignment="Left" Width="158" Height="52" VerticalAlignment="Bottom" RenderTransformOrigin="0.52,0.516" Margin="499,0,0,77" Click="Btn9_Click" Grid.Row="1" />
+        <Button Content="Члены ГЭК" x:Name="Btn10"  HorizontalAlignment="Left" Width="158"  Height="52" VerticalAlignment="Bottom" Margin="499,0,0,21" Click="Btn10_Click" Grid.Row="1" />
+        <Button Content="Личные данные" x:Name="Btn11"  HorizontalAlignment="Left" Width="158"  Height="52" VerticalAlignment="Bottom" Margin="336,0,0,77" Click="Btn11_Click" Grid.Row="1" />
+        <Button Content="Протоколы" x:Name="Btn12"  HorizontalAlignment="Left" Width="158"  Height="52" VerticalAlignment="Bottom" Margin="10,0,0,190" Grid.Row="1" Click="Btn12_Click" />
     </Grid>
 </Page>

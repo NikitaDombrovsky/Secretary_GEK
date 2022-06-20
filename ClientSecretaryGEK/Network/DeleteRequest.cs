@@ -12,18 +12,20 @@ namespace ClientSecretaryGEK.Network
     {
         HttpWebRequest _request;
         string _adress;
+        string Token;
 
         public string Response { get; set; }
 
-        public DeleteRequest(string address)
+        public DeleteRequest(string address, string Token_)
         {
             _adress = address;
+            Token = Token_;
         }
         public void Run()
         {
             _request = (HttpWebRequest)WebRequest.Create(_adress);
             _request.Method = "DELETE";
-
+            _request.Headers["Authorization"] = Token;
 
             try
             {

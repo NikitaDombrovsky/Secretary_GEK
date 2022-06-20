@@ -14,8 +14,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <DataGrid Name="dgv" Grid.Row="1"/>
-        <Grid Panel.ZIndex="-2" Background="Gray" Grid.Row="0" Margin="-1,10,1,0">
-            <Button Content="Добавить" x:Name="BtnAdd"  HorizontalAlignment="Left" Width="125" Click="BtnAdd_Click"  Height="32" VerticalAlignment="Bottom" Margin="141,0,0,13" />
+        <Grid Panel.ZIndex="-2" Background="#add3e6" Grid.Row="0" Margin="-1,0,0,0">
+            <Button Content="Добавить" x:Name="BtnAdd"  HorizontalAlignment="Left" Width="125" Height="32" Click="BtnAdd_Click"   VerticalAlignment="Bottom" Margin="141,0,0,13" />
             <Button Content="Редактировать" x:Name="BtnEdit"  HorizontalAlignment="Left" Width="124" Click="BtnEdit_Click"  Height="32" VerticalAlignment="Bottom" RenderTransformOrigin="0.52,0.516" Margin="271,0,0,13" />
             <Button Content="Удалить" x:Name="BtnDel"  HorizontalAlignment="Left" Width="125" Click="BtnDel_Click"  Height="32" VerticalAlignment="Bottom" Margin="400,0,0,13" />
             <TextBox Background="White" x:Name="Search" Width="125" HorizontalAlignment="Left" VerticalAlignment="Bottom" TextChanged="Search_TextChanged"  Margin="12,0,0,15" Height="30" />

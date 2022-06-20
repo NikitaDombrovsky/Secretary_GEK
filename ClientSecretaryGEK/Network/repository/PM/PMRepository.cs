@@ -9,7 +9,7 @@ namespace ClientSecretaryGEK.Network.repository
     internal interface PMRepository
     {
         List<PMTable> Execute();
-        //void _Create(string token, string method, string index, string name);
+        //void _Create(string token, string method, string index, string name, string urlPM);
 
     }
 }
